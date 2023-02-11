@@ -163,12 +163,6 @@ var answerKey=document.createElement("ul");
         listItem.appendChild(spanElement);
         answerKey.appendChild(listItem);
     });
-    let btn=document.createElement("button");
-    btn.setAttribute("id","btn")
-    btn.setAttribute("class","resetbtn");
-    btn.innerHTML = "Reset";
-    btn.addEventListener("click",reset);
-    answerKey.appendChild(btn);
 }
 window.addEventListener('load',assignValue);
 
@@ -210,6 +204,18 @@ function removeAllCheck(){
     });
 }
 
+function noOption(){
+    var result=true;
+    var arr=["a","b","c","d"];
+    arr.forEach(function(value){
+        var el=document.getElementById(value);
+        if(el.checked){
+            result=false;
+        }
+    });
+    return result;
+}
+
 console.log(score);
 function checkFunction(){
     statusElement.appendChild(statustitle);
@@ -221,7 +227,12 @@ function checkFunction(){
         statustitle.innerHTML="Correct";
         statusElement.style.backgroundColor="#d4edda";
         
-    }else{
+    }else if(noOption()){
+        statustitle.style.color="#97535e"; 
+        statustitle.innerHTML="Skipped";
+        statusElement.style.backgroundColor="#f7d6d9";
+    }
+    else{
         statustitle.style.color="#97535e"; 
         statustitle.innerHTML="In-Correct";
         statusElement.style.backgroundColor="#f7d6d9";
@@ -242,24 +253,28 @@ function checkFunction(){
 function thanksForPlayingGame(){
     var scoreH=document.getElementById("score");
     var ansTitle=document.getElementById("ScoreHeading");
-    {var elementToDelete=document.getElementById("content");
+    {var elementToDelete=document.getElementById("data");
     elementToDelete.remove();}
     ansTitle.style.visibility="visible";
     scoreH.innerHTML=`Score: ${score}`;
+    var parent=document.getElementById("content");
+    parent.insertAdjacentElement("afterbegin",answerKey);
+    // var newElementToInsert=document.createElement("div");
+    // newElementToInsert.appendChild(answerKey);
+    // newElementToInsert.setAttribute("id","content");
+
     
-    var newElementToInsert=document.createElement("div");
-    newElementToInsert.appendChild(answerKey);
-
-    newElementToInsert.setAttribute("id","content");
-
-    
-    var parent=document.getElementById("content-body");
-    parent.appendChild(newElementToInsert);
-
+    // var parent=document.getElementById("content-body");
+    // parent.appendChild(newElementToInsert);
+    btn.removeEventListener("click",thanksForPlayingGame);
+    btn.addEventListener("click",reset);
+    btn.setAttribute("class","resetbtn");
+    btn.innerHTML="Reset";
 }
 
 function nextQuestion(){
     counter++;
+    console.log("nextQuestion");
     assignValue();
     btn.removeEventListener("click",nextQuestion);
     btn.addEventListener("click",checkFunction);

@@ -39,12 +39,12 @@ body{
 }
 #btn{
     width: 100px;
-    height: 30px;
     border: none;
     border-radius: 5px;
     outline: none;
     font-weight: 550;
-    margin-top: 40px;
+    margin-top: 20px;
+    flex: 0 0 30px;
 }
 
 #status{
@@ -76,14 +76,11 @@ input{
     margin-top: 30px ;
 }
 
-@media screen and (max-width: 540px) {
+@media screen and (max-width: 564px) {
     #content{ 
        width: 90%;
     }
 }
-
-
-
 
 .ansSpan{
     background-color: green;
