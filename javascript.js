@@ -141,6 +141,7 @@ const question=[
     },
 ]
 
+var ansCorrectStatus=[];
 
 var counter=0;  //number of question currently on
 var score=0;    //Score of the player;
@@ -152,17 +153,20 @@ statustitle.style.marginTop="0px";
 statustitle.style.padding="0px";
 statustitle.style.fontSize="20px";
 }
+
 var answerKey=document.createElement("ul");
 {
+    let i = 0;
     question.forEach(function(value){
         let listItem=document.createElement("li");
         listItem.innerHTML=value.ques+"  -  ";
-        let spanElement=document.createElement("span");
+        let spanElement=document.createElement("div");
         spanElement.innerHTML="    "+value.ans.an+"    ";
         spanElement.setAttribute("class","ansSpan");
         listItem.appendChild(spanElement);
         answerKey.appendChild(listItem);
     });
+    
 }
 window.addEventListener('load',assignValue);
 
@@ -226,16 +230,19 @@ function checkFunction(){
         statustitle.style.color="#548c6d";
         statustitle.innerHTML="Correct";
         statusElement.style.backgroundColor="#d4edda";
+        ansCorrectStatus.push(true);
         
     }else if(noOption()){
         statustitle.style.color="#97535e"; 
         statustitle.innerHTML="Skipped";
         statusElement.style.backgroundColor="#f7d6d9";
+        ansCorrectStatus.push(false);
     }
     else{
         statustitle.style.color="#97535e"; 
         statustitle.innerHTML="In-Correct";
         statusElement.style.backgroundColor="#f7d6d9";
+        ansCorrectStatus.push(false);
     }
     btn.removeEventListener("click",checkFunction);
     btn.innerHTML="NEXT";
@@ -259,6 +266,7 @@ function thanksForPlayingGame(){
     scoreH.innerHTML=`Score: ${score}`;
     var parent=document.getElementById("content");
     parent.insertAdjacentElement("afterbegin",answerKey);
+    changeColorOfWrongDiv();
     // var newElementToInsert=document.createElement("div");
     // newElementToInsert.appendChild(answerKey);
     // newElementToInsert.setAttribute("id","content");
@@ -270,6 +278,7 @@ function thanksForPlayingGame(){
     btn.addEventListener("click",reset);
     btn.setAttribute("class","resetbtn");
     btn.innerHTML="Reset";
+    
 }
 
 function nextQuestion(){
@@ -285,3 +294,19 @@ function nextQuestion(){
 }
 
 btn.addEventListener("click",checkFunction);
+
+
+function changeColorOfWrongDiv(){
+    let a = document.getElementsByClassName("ansSpan");
+    console.log(a);
+    console.log(ansCorrectStatus);
+
+    let i =0;
+    Array.from(a).forEach(function(element){
+        if(ansCorrectStatus[i] == false){
+            element.classList.add("wrongansSpan");
+        }
+        ++i;
+    })
+
+}

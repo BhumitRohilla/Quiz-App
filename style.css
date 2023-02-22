@@ -87,6 +87,13 @@ input{
     color: white;
     padding: 0px 1.2em;
     border-radius: 0.3rem;
+    width: fit-content;
+    margin-top: 5px;
+}
+
+.wrongansSpan{
+    background-color: red;
+    color: white;
 }
 
 li{
